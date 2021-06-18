@@ -1,8 +1,10 @@
 const express = require('express');
-const GNRequest = require('./apis/gerencianet')
+const bodyParser = require('body-parser');
+const GNRequest = require('./apis/gerencianet');
 
 const app = express();
 
+app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 
@@ -40,6 +42,11 @@ app.get('/cobrancas', async(req, res) => {
   );
 
   return res.send(cobrancas.data);
+});
+
+app.post('/webhook(/pix)?', (req, res) => {
+  console.log(req.body);
+  res.send('200');
 });
 
 app.listen(8000, () => {
