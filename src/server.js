@@ -21,7 +21,7 @@ app.get('/', async (req, res) => {
       expiracao: 3600,
     },
     valor: {
-      original: '85.00',
+      original: '0.10',
     },
     chave: 'e92c9339-1d74-4b1e-a3a9-78203b81da2b',
     solicitacaoPagador: 'Cobrança dos serviços prestados',
