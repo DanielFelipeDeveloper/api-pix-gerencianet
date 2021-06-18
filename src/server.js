@@ -6,7 +6,10 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 
-const reqGNAlready = GNRequest();
+const reqGNAlready = GNRequest({
+  clientID: process.env.GN_CLIENT_ID,
+  clientSecret: process.env.GN_CLIENT_SECRET
+});
 
 app.get('/', async (req, res) => {
   const reqGN = await reqGNAlready;
@@ -29,6 +32,15 @@ app.get('/', async (req, res) => {
   return res.render('qrcode', { qrCodeImage: qrCodeResponse.data.imagemQrcode });
 });
 
+app.get('/cobrancas', async(req, res) => {
+  const reqGN = await reqGNAlready;
+
+  const cobrancas = await reqGN.get(
+    '/v2/cob?inicio=2021-06-10T16:01:35Z&fim=2021-06-30T20:10:00Z'
+  );
+
+  return res.send(cobrancas.data);
+});
 
 app.listen(8000, () => {
   console.log('running');
